@@ -75,6 +75,7 @@ body {
 
 .card-flipped {
   transform: rotateY(180deg);
+  cursor: default;
 }
 
 @media screen and (max-width: 940px) {
