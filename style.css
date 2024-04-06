@@ -7,7 +7,7 @@
 :root {
   --color1: #fff;
   --color2: #000;
-  --color3: greenyellow;
+  --color3: #a7fc00;
 }
 
 body {
@@ -31,9 +31,9 @@ body {
   cursor: pointer;
 }
 
-.card-nonclicable {
-  /* cursor: not-allowed; */
-}
+/* .card-nonclicable {
+  cursor: not-allowed;
+} */
 
 .flip-card {
   transition: 700ms;
@@ -41,12 +41,12 @@ body {
   width: 100%;
   position: relative;
   transform-style: preserve-3d;
-  border: 2px solid var(--color1);
+  border: 3px solid var(--color1);
   border-radius: 15px;
 }
 
 .resolved {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) scale(0.95) !important;
   border-color: var(--color3);
 }
 
@@ -59,7 +59,7 @@ body {
   height: 100%;
   width: 100%;
   position: absolute;
-  border-radius: 13px;
+  border-radius: 12px;
 }
 
 .front {

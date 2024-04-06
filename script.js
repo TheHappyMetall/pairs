@@ -8,6 +8,8 @@ const winTexts = [
   "еще одна победа, и сюда прилетят пришельцы",
 ];
 
+let pair = [];
+
 let cards = [
   {
     color: `${getRandHex()}`,
@@ -56,6 +58,8 @@ function startGame() {
   window.cardsElements = gamePlace.querySelectorAll(".card");
   cardsElements.forEach((element) => {
     element.addEventListener("click", ohTwoCards);
+
+    // element.addEventListener("click", gameLogic);
   });
 }
 
@@ -93,12 +97,20 @@ function shuffle(array) {
 }
 
 function ohTwoCards(e) {
-  e.target.offsetParent.classList.toggle("card-flipped");
-
+  if (e.target.parentNode.classList.contains("flip-card")) {
+    e.target.parentNode.classList.add("card-flipped");
+  } else {
+    document.querySelectorAll(".card-flipped").forEach((element) => {
+      element.classList.remove("card-flipped");
+    });
+    return;
+  }
   // Проверка на наличие двух открытых карт
-  if (gamePlace.querySelectorAll(".card-flipped").length === 2) {
-    console.log("Открыты две карты");
-    const twoCards = document.querySelectorAll(".card-flipped");
+  if (
+    gamePlace.querySelectorAll(".card-flipped:not(.resolved)").length > 1 &&
+    gamePlace.querySelectorAll(".card-flipped:not(.resolved)").length < 3
+  ) {
+    let twoCards = document.querySelectorAll(".card-flipped:not(.resolved)");
 
     // Одинковые ли карты
     if (
@@ -107,7 +119,6 @@ function ohTwoCards(e) {
     ) {
       twoCards.forEach((winCard) => {
         winCard.classList.add("resolved");
-        console.log(winCard);
       });
     }
 
@@ -122,8 +133,9 @@ function ohTwoCards(e) {
     // Конец действия
     setTimeout(() => {
       gamePlace.querySelectorAll(".card-flipped").forEach((element) => {
-        element.classList.remove("card-flipped");
-
+        if (!element.classList.contains("resolved")) {
+          element.classList.remove("card-flipped");
+        }
         // Возврат слушателей и курсора *отключено*
         cardsElements.forEach((element) => {
           element.addEventListener("click", ohTwoCards);
@@ -139,3 +151,20 @@ function ohTwoCards(e) {
     });
   }
 }
+
+// function gameLogic(e) {
+//   if (
+//     e.target.classList.contains("front") &&
+//     !e.target.classList.contains("resolved")
+//   ) {
+//     e.target.parentNode.classList.add("card-flipped");
+//   }
+
+//   const pickedCards = document.querySelectorAll(".card-flipped");
+//   // pickedCards.forEach(element => {
+//   //   if(element.classList.contains('resolved')) {
+
+//   //   }
+//   // });
+//   // if ( document.querySelectorAll(".card-flipped").length > 2)
+// }
