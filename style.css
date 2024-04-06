@@ -48,6 +48,7 @@ body {
 .resolved {
   transform: rotateY(180deg) scale(0.95) !important;
   border-color: var(--color3);
+  cursor: default;
 }
 
 /* .card:hover .flip-card {
