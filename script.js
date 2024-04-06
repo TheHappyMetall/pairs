@@ -13,7 +13,14 @@ const winTexts = [
   "сквидвард кларнет пропил...",
 ];
 
-let numberOfCards = 12;
+let numberOfCards;
+while (isNaN(numberOfCards) || numberOfCards < 2 || numberOfCards > 44) {
+  numberOfCards = Number(prompt("Количество карт (четное число 2-44):", 12));
+}
+if (numberOfCards % 2 !== 0) {
+  numberOfCards += 1;
+}
+
 let NumberOfUnicueCards = numberOfCards / 2;
 
 let cards = [];
@@ -43,6 +50,8 @@ function startGame() {
       </div> 
     </div>`;
   });
+
+  setStyle();
 
   // Расстановка слушателей на игровое поле
   window.cardsElements = gamePlace.querySelectorAll(".card");
@@ -148,6 +157,27 @@ function createDeck() {
       image: `${getRandHex()}`,
     });
   }
+}
+
+function setStyle() {
+  // Изменение flex для карт
+  if (numberOfCards <= 8) {
+    document.querySelectorAll(".card").forEach((element) => {
+      element.classList.add("cardFlexBefore8");
+    });
+  } else if (numberOfCards <= 15) {
+    document.querySelectorAll(".card").forEach((element) => {
+      element.classList.add("cardFlexBefore15");
+    });
+  } else if (numberOfCards <= 44) {
+    document.querySelectorAll(".card").forEach((element) => {
+      element.classList.add("cardFlexBefore44");
+    });
+  }
+
+  // Изменение оси поворота карты
+  let cardWidth = document.querySelector(".card").offsetWidth;
+  let cardHeight = document.querySelector(".card").offsetHeight;
 }
 
 // function gameLogic(e) {

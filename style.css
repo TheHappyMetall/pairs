@@ -12,20 +12,21 @@
 
 body {
   height: 100svh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100svw;
   background: var(--color2);
   user-select: none;
 }
 
 .game {
-  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 5vw;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .card {
-  height: 20vw;
-  width: 15vw;
   perspective: 1000px;
   display: inline-block;
 }
@@ -78,9 +79,21 @@ body {
   cursor: default;
 }
 
+/*  */
+.cardFlexBefore8 {
+  flex: 30%;
+}
+.cardFlexBefore15 {
+  flex: 19%;
+}
+.cardFlexBefore44 {
+  flex: 14%;
+}
+
+/*  */
+
 @media screen and (max-width: 940px) {
   .card {
-    height: 20vh;
-    width: 30vw;
+    flex: 25%;
   }
 }
