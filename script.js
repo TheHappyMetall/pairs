@@ -1,41 +1,31 @@
 const gamePlace = document.querySelector(".game");
 const timeOutTime = 700;
 const winTexts = [
-  "Ар ю крэйзи?))",
   "Ура, победа",
-  "поздравляем, вы выиграли бутерброд",
+  "поздравляем, вы выиграли бутерброд (но вы его не получите, потому что разработчик в край обеднел с подобными призовыми...)",
   "если вы это читаете напишите мне в тг",
   "еще одна победа, и сюда прилетят пришельцы",
+  "меня не выпускают из подвала, помогите...",
+  "какой акваланг посоветуете?",
+  "сколько в ломбарде дадут за UGM-133A Trident II (D5) — самую точную межконтинентальную баллистическую ракету?",
+  "эх, щас бы тунца с овощами...",
+  "поехали в Бикини Боттомскую область?",
+  "сквидвард кларнет пропил...",
 ];
 
-let pair = [];
+let numberOfCards = 12;
+let NumberOfUnicueCards = numberOfCards / 2;
 
-let cards = [
-  {
-    color: `${getRandHex()}`,
-  },
-  {
-    color: `${getRandHex()}`,
-  },
-  {
-    color: `${getRandHex()}`,
-  },
-  {
-    color: `${getRandHex()}`,
-  },
-  {
-    color: `${getRandHex()}`,
-  },
-  {
-    color: `${getRandHex()}`,
-  },
-];
+let cards = [];
 
 //
 startGame();
 //
 
 function startGame() {
+  //Создание колоды
+  createDeck();
+
   // Дублирование карт
   cards.forEach((card) => {
     cards.push(card);
@@ -49,7 +39,7 @@ function startGame() {
     <div class="card">
       <div class="flip-card">
         <div class="front"></div>
-        <div class="back" style="background: ${card.color}"></div>
+        <div class="back" style="background: ${card.image}"></div>
       </div> 
     </div>`;
   });
@@ -148,6 +138,14 @@ function ohTwoCards(e) {
     cardsElements.forEach((element) => {
       element.removeEventListener("click", ohTwoCards);
       element.classList.add("card-nonclicable");
+    });
+  }
+}
+
+function createDeck() {
+  for (let index = 0; index < NumberOfUnicueCards; index++) {
+    cards.push({
+      image: `${getRandHex()}`,
     });
   }
 }
