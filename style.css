@@ -28,7 +28,6 @@ body {
   width: 15vw;
   perspective: 1000px;
   display: inline-block;
-  cursor: pointer;
 }
 
 /* .card-nonclicable {
@@ -43,6 +42,7 @@ body {
   transform-style: preserve-3d;
   border: 3px solid var(--color1);
   border-radius: 15px;
+  cursor: pointer;
 }
 
 .resolved {
