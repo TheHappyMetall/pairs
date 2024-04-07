@@ -26,6 +26,16 @@ let moves = 0;
 let movesPlace = document.querySelector(".panel-moves");
 movesPlace.innerHTML = moves;
 
+const cardSet = [
+  { name: "cardIconsSet1", amount: 202 },
+  {
+    name: "cardIconsSet2",
+    amount: 40,
+  },
+];
+
+const selectedSet = cardSet[Math.floor(Math.random() * cardSet.length)];
+
 //
 startGame();
 //
@@ -155,8 +165,10 @@ function ohTwoCards(e) {
 function createDeck() {
   for (let index = 0; index < NumberOfUnicueCards; index++) {
     cards.push({
-      style: `background: ${getRandHex()} url(images/icons/cardIconsSet1/cardIcon${Math.floor(
-        Math.random() * (202 - 1) + 1
+      style: `background: ${getRandHex()} url(images/icons/${
+        selectedSet.name
+      }/cardIcon${Math.floor(
+        Math.random() * (selectedSet.amount - 1) + 1
       )}.svg) no-repeat center / 35%`,
     });
   }
