@@ -156,7 +156,7 @@ function createDeck() {
   for (let index = 0; index < NumberOfUnicueCards; index++) {
     cards.push({
       style: `background: ${getRandHex()} url(images/icons/cardIconsSet1/cardIcon${Math.floor(
-        Math.random() * (66 - 1) + 1
+        Math.random() * (202 - 1) + 1
       )}.svg) no-repeat center / 35%`,
     });
   }
