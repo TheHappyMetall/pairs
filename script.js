@@ -1,15 +1,22 @@
 const gamePlace = document.querySelector(".game");
 const timeOutTime = 700;
-const winTexts = [
-  "Ура, победа",
-  "поздравляем, вы выиграли бутерброд (но вы его не получите, потому что разработчик в край обеднел с подобными призовыми...)",
-  "если вы это читаете напишите мне в тг @Hellstaff_Blackbrand",
-  "меня не выпускают из подвала, помогите...",
-];
+const winTexts = ["поздравляем, вы выиграли бутерброд"];
+const minCards = 2;
+const defaultCards = 12;
+const maxCards = 44;
 
 let numberOfCards;
-while (isNaN(numberOfCards) || numberOfCards < 2 || numberOfCards > 44) {
-  numberOfCards = Number(prompt("Количество карт (четное число 2-44):", 12));
+while (
+  isNaN(numberOfCards) ||
+  numberOfCards < minCards ||
+  numberOfCards > maxCards
+) {
+  numberOfCards = Number(
+    prompt(
+      `Количество карт (четное число ${minCards}-${maxCards}):`,
+      defaultCards
+    )
+  );
 }
 if (numberOfCards % 2 !== 0) {
   numberOfCards += 1;
@@ -27,10 +34,15 @@ let movesPlace = document.querySelector(".panel-moves");
 movesPlace.innerHTML = moves;
 
 const cardSet = [
-  { name: "cardIconsSet1", amount: 202 },
+  {
+    name: "cardIconsSet1",
+    amount: 202,
+    fileType: "svg",
+  },
   {
     name: "cardIconsSet2",
     amount: 40,
+    fileType: "png",
   },
 ];
 
@@ -167,9 +179,9 @@ function createDeck() {
     cards.push({
       style: `background: ${getRandHex()} url(images/icons/${
         selectedSet.name
-      }/cardIcon${Math.floor(
-        Math.random() * (selectedSet.amount - 1) + 1
-      )}.svg) no-repeat center / 35%`,
+      }/cardIcon${Math.floor(Math.random() * (selectedSet.amount - 1) + 1)}.${
+        selectedSet.fileType
+      }) no-repeat center / 35%`,
     });
   }
 
@@ -191,7 +203,7 @@ function setStyle() {
     document.querySelectorAll(".card").forEach((element) => {
       element.classList.add("cardFlexBefore15");
     });
-  } else if (numberOfCards <= 44) {
+  } else if (numberOfCards <= maxCards) {
     document.querySelectorAll(".card").forEach((element) => {
       element.classList.add("cardFlexBefore44");
     });
@@ -205,6 +217,45 @@ function setStyle() {
 function addMoves() {
   ++moves;
   movesPlace.innerHTML = moves;
+}
+
+// Модальное окно
+function openModal(content, needInputRange = false) {
+  switch (needInputRange) {
+    case false:
+      document.querySelector(".modal-content").innerHTML = content;
+      break;
+
+    case true:
+      document.querySelector(".modal-content").innerHTML =
+        content +
+        `<div class="modal-input-cont">
+          <input min="${minCards}" max="${maxCards}" value="${defaultCards}" type="range" class="modal-range-input"/>
+        </div>`;
+      document.querySelector(
+        ".modal-buttons"
+      ).innerHTML += `<input type="number" min="${minCards}" max="${maxCards}" value="${defaultCards}" required class="modal-number-input">`;
+      linkInputs();
+      break;
+  }
+  document.querySelector(".modal-wrapper").classList.add("modal-open");
+}
+document.querySelector(".modal-ok-btn").addEventListener("click", () => {
+  document.querySelector(".modal-wrapper").classList.remove("modal-open");
+
+  numberOfCards = document.querySelector(".modal-number-input").value;
+});
+
+function linkInputs() {
+  const rangeInput = document.querySelector(".modal-range-input");
+  const numberInput = document.querySelector(".modal-number-input");
+
+  rangeInput.addEventListener("input", (e) => {
+    numberInput.value = e.target.value;
+  });
+  numberInput.addEventListener("input", (e) => {
+    rangeInput.value = e.target.value;
+  });
 }
 
 // function gameLogic(e) {
