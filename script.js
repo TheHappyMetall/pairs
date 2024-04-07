@@ -22,9 +22,9 @@ let cards = [];
 let victories = localStorage.getItem("victories") || 0;
 document.querySelector(".panel-victories").innerHTML = victories;
 
-let movies = 0;
-let moviesPlace = document.querySelector(".panel-moves");
-moviesPlace.innerHTML = movies;
+let moves = 0;
+let movesPlace = document.querySelector(".panel-moves");
+movesPlace.innerHTML = moves;
 
 //
 startGame();
@@ -121,7 +121,7 @@ function ohTwoCards(e) {
         winCard.classList.add("resolved");
       });
     } else {
-      addMovies();
+      addMoves();
     }
 
     // Проверка на выигрыш
@@ -130,7 +130,7 @@ function ohTwoCards(e) {
         alert(
           `${
             winTexts[Math.floor(Math.random() * winTexts.length)]
-          }\n\nВсего ${movies} ошибок`
+          }\n\nВсего ${moves} ошибок`
         );
         localStorage.setItem("victories", ++victories);
         location.reload();
@@ -188,9 +188,9 @@ function setStyle() {
   let cardHeight = document.querySelector(".card").offsetHeight;
 }
 
-function addMovies() {
-  ++movies;
-  moviesPlace.innerHTML = movies;
+function addMoves() {
+  ++moves;
+  movesPlace.innerHTML = moves;
 }
 
 // function gameLogic(e) {
