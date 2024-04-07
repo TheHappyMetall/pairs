@@ -3,14 +3,8 @@ const timeOutTime = 700;
 const winTexts = [
   "Ура, победа",
   "поздравляем, вы выиграли бутерброд (но вы его не получите, потому что разработчик в край обеднел с подобными призовыми...)",
-  "если вы это читаете напишите мне в тг",
-  "еще одна победа, и сюда прилетят пришельцы",
+  "если вы это читаете напишите мне в тг @Hellstaff_Blackbrand",
   "меня не выпускают из подвала, помогите...",
-  "какой акваланг посоветуете?",
-  "сколько в ломбарде дадут за UGM-133A Trident II (D5) — самую точную межконтинентальную баллистическую ракету?",
-  "эх, щас бы тунца с овощами...",
-  "поехали в Бикини Боттомскую область?",
-  "сквидвард кларнет пропил...",
 ];
 
 let numberOfCards;
@@ -24,6 +18,13 @@ if (numberOfCards % 2 !== 0) {
 let NumberOfUnicueCards = numberOfCards / 2;
 
 let cards = [];
+
+let victories = localStorage.getItem("victories") || 0;
+document.querySelector(".panel-victories").innerHTML = victories;
+
+let movies = 0;
+let moviesPlace = document.querySelector(".panel-moves");
+moviesPlace.innerHTML = movies;
 
 //
 startGame();
@@ -104,13 +105,13 @@ function ohTwoCards(e) {
     });
     return;
   }
+
   // Проверка на наличие двух открытых карт
   if (
     gamePlace.querySelectorAll(".card-flipped:not(.resolved)").length > 1 &&
     gamePlace.querySelectorAll(".card-flipped:not(.resolved)").length < 3
   ) {
     let twoCards = document.querySelectorAll(".card-flipped:not(.resolved)");
-
     // Одинковые ли карты
     if (
       twoCards[0].querySelector(".back").style.background ===
@@ -119,12 +120,19 @@ function ohTwoCards(e) {
       twoCards.forEach((winCard) => {
         winCard.classList.add("resolved");
       });
+    } else {
+      addMovies();
     }
 
     // Проверка на выигрыш
     if (gamePlace.querySelectorAll(".resolved").length === cards.length) {
       setTimeout(() => {
-        alert(winTexts[Math.floor(Math.random() * winTexts.length)]);
+        alert(
+          `${
+            winTexts[Math.floor(Math.random() * winTexts.length)]
+          }\n\nВсего ${movies} ошибок`
+        );
+        localStorage.setItem("victories", ++victories);
         location.reload();
       }, timeOutTime);
     }
@@ -178,6 +186,11 @@ function setStyle() {
   // Изменение оси поворота карты
   let cardWidth = document.querySelector(".card").offsetWidth;
   let cardHeight = document.querySelector(".card").offsetHeight;
+}
+
+function addMovies() {
+  ++movies;
+  moviesPlace.innerHTML = movies;
 }
 
 // function gameLogic(e) {
