@@ -34,20 +34,13 @@ function startGame() {
   //Создание колоды
   createDeck();
 
-  // Дублирование карт
-  cards.forEach((card) => {
-    cards.push(card);
-  });
-  // Перемешивание карт
-  shuffle(cards);
-
   // Создание игрового поля
   cards.forEach((card) => {
     gamePlace.innerHTML += `
     <div class="card">
       <div class="flip-card">
         <div class="front"></div>
-        <div class="back" style="background: ${card.image}"></div>
+        <div class="back" style="${card.style}"></div>
       </div> 
     </div>`;
   });
@@ -130,7 +123,7 @@ function ohTwoCards(e) {
         alert(
           `${
             winTexts[Math.floor(Math.random() * winTexts.length)]
-          }\n\nВсего ${moves} ошибок`
+          }\n\nНеправильных ходов: ${moves} `
         );
         localStorage.setItem("victories", ++victories);
         location.reload();
@@ -162,9 +155,18 @@ function ohTwoCards(e) {
 function createDeck() {
   for (let index = 0; index < NumberOfUnicueCards; index++) {
     cards.push({
-      image: `${getRandHex()}`,
+      style: `background: ${getRandHex()} url(images/icons/cardIconsSet1/cardIcon${Math.floor(
+        Math.random() * (66 - 1) + 1
+      )}.svg) no-repeat center / 35%`,
     });
   }
+
+  // Дублирование карт
+  cards.forEach((card) => {
+    cards.push(card);
+  });
+  // Перемешивание карт
+  shuffle(cards);
 }
 
 function setStyle() {
