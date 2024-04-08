@@ -107,7 +107,8 @@ body {
 }
 
 .front {
-  background: url(images/cardBGs/cardback2.jpg);
+  background: url(images/cardBGs/SprinkleSmall.svg);
+  background-size: contain;
   backface-visibility: hidden;
   cursor: pointer;
 }
