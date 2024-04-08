@@ -7,6 +7,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+::selection {
+  background: #a8fc00bd;
+  color: #000;
+}
+
 :root {
   --color1: #fff;
   --color2: #000;
