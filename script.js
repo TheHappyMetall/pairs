@@ -1,28 +1,25 @@
 const gamePlace = document.querySelector(".game");
 const timeOutTime = 700;
-const winTexts = ["поздравляем, вы выиграли бутерброд"];
+const winTexts = ["Поздравляем, вы выиграли бутерброд"];
 const minCards = 2;
 const defaultCards = 12;
 const maxCards = 44;
+let isEnd = false;
 
 let numberOfCards;
-while (
-  isNaN(numberOfCards) ||
-  numberOfCards < minCards ||
-  numberOfCards > maxCards
-) {
-  numberOfCards = Number(
-    prompt(
-      `Количество карт (четное число ${minCards}-${maxCards}):`,
-      defaultCards
-    )
-  );
-}
+// while (
+//   isNaN(numberOfCards)
+// ) {
+//   numberOfCards = Number(
+//     prompt(
+//       `Количество карт (четное число ${minCards}-${maxCards}):`,
+//       defaultCards
+//     )
+//   );
+// }
 if (numberOfCards % 2 !== 0) {
   numberOfCards += 1;
 }
-
-let NumberOfUnicueCards = numberOfCards / 2;
 
 let cards = [];
 
@@ -39,17 +36,12 @@ const cardSet = [
     amount: 202,
     fileType: "svg",
   },
-  {
-    name: "cardIconsSet2",
-    amount: 40,
-    fileType: "png",
-  },
 ];
 
 const selectedSet = cardSet[Math.floor(Math.random() * cardSet.length)];
 
 //
-startGame();
+openModal(`Количество карт (четное число ${minCards}-${maxCards}):`, true);
 //
 
 function startGame() {
@@ -142,13 +134,12 @@ function ohTwoCards(e) {
     // Проверка на выигрыш
     if (gamePlace.querySelectorAll(".resolved").length === cards.length) {
       setTimeout(() => {
-        alert(
+        openModal(
           `${
             winTexts[Math.floor(Math.random() * winTexts.length)]
-          }\n\nНеправильных ходов: ${moves} `
+          } <div class="win-moves-text">Неправильных ходов: ${moves}</div>`
         );
-        localStorage.setItem("victories", ++victories);
-        location.reload();
+        isEnd = true;
       }, timeOutTime);
     }
 
@@ -208,10 +199,6 @@ function setStyle() {
       element.classList.add("cardFlexBefore44");
     });
   }
-
-  // Изменение оси поворота карты
-  let cardWidth = document.querySelector(".card").offsetWidth;
-  let cardHeight = document.querySelector(".card").offsetHeight;
 }
 
 function addMoves() {
@@ -221,15 +208,12 @@ function addMoves() {
 
 // Модальное окно
 function openModal(content, needInputRange = false) {
+  document.querySelector(".content-text").innerHTML = content;
   switch (needInputRange) {
-    case false:
-      document.querySelector(".modal-content").innerHTML = content;
-      break;
-
     case true:
-      document.querySelector(".modal-content").innerHTML =
-        content +
-        `<div class="modal-input-cont">
+      document.querySelector(
+        ".modal-content"
+      ).innerHTML += `<div class="modal-input-cont">
           <input min="${minCards}" max="${maxCards}" value="${defaultCards}" type="range" class="modal-range-input"/>
         </div>`;
       document.querySelector(
@@ -241,9 +225,22 @@ function openModal(content, needInputRange = false) {
   document.querySelector(".modal-wrapper").classList.add("modal-open");
 }
 document.querySelector(".modal-ok-btn").addEventListener("click", () => {
-  document.querySelector(".modal-wrapper").classList.remove("modal-open");
+  numberOfCards = Number(document.querySelector(".modal-number-input").value);
+  if (
+    !isNaN(numberOfCards) &&
+    numberOfCards >= minCards &&
+    numberOfCards <= maxCards
+  ) {
+    document.querySelector(".modal-wrapper").classList.remove("modal-open");
+    window.NumberOfUnicueCards = numberOfCards / 2;
+    document.querySelector(".modal-number-input").readOnly = true;
+    startGame();
+  }
 
-  numberOfCards = document.querySelector(".modal-number-input").value;
+  if (isEnd) {
+    localStorage.setItem("victories", ++victories);
+    location.reload();
+  }
 });
 
 function linkInputs() {
