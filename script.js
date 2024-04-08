@@ -7,19 +7,6 @@ const maxCards = 44;
 let isEnd = false;
 
 let numberOfCards;
-// while (
-//   isNaN(numberOfCards)
-// ) {
-//   numberOfCards = Number(
-//     prompt(
-//       `Количество карт (четное число ${minCards}-${maxCards}):`,
-//       defaultCards
-//     )
-//   );
-// }
-if (numberOfCards % 2 !== 0) {
-  numberOfCards += 1;
-}
 
 let cards = [];
 
@@ -214,7 +201,7 @@ function openModal(content, needInputRange = false) {
       document.querySelector(
         ".modal-content"
       ).innerHTML += `<div class="modal-input-cont">
-          <input min="${minCards}" max="${maxCards}" value="${defaultCards}" type="range" class="modal-range-input"/>
+          <input min="${minCards}" max="${maxCards}" value="${defaultCards}" type="range" step="2" class="modal-range-input"/>
         </div>`;
       document.querySelector(
         ".modal-buttons"
