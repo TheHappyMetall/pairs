@@ -217,6 +217,12 @@ function openModal(content, needInputRange = false) {
 }
 document.querySelector(".modal-ok-btn").addEventListener("click", () => {
   numberOfCards = Number(document.querySelector(".modal-number-input").value);
+
+  if (isEnd) {
+    localStorage.setItem("victories", ++victories);
+    location.reload();
+  }
+
   if (
     !isNaN(numberOfCards) &&
     numberOfCards >= minCards &&
@@ -226,11 +232,6 @@ document.querySelector(".modal-ok-btn").addEventListener("click", () => {
     window.NumberOfUnicueCards = numberOfCards / 2;
     document.querySelector(".modal-number-input").readOnly = true;
     startGame();
-  }
-
-  if (isEnd) {
-    localStorage.setItem("victories", ++victories);
-    location.reload();
   }
 });
 
