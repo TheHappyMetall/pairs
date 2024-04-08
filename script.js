@@ -221,6 +221,10 @@ function openModal(content, needInputRange = false) {
       ).innerHTML += `<input type="number" min="${minCards}" max="${maxCards}" value="${defaultCards}" required class="modal-number-input">`;
       linkInputs();
       break;
+
+    case false:
+      document.querySelector(".modal-input-cont").remove();
+      break;
   }
   document.querySelector(".modal-wrapper").classList.add("modal-open");
 }
